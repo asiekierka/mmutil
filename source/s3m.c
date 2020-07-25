@@ -34,17 +34,6 @@
 
 #define S3M_NOTE(a) (((a&15)+(a>>4)*12)+12)
 
-#ifdef SUPER_ASCII
-#define vstr_s3m_samp " %5i ³ %-4s³ %3i%% ³%5ihz³ %-28s³\n"
-#define vstr_s3m_sampe " ----- ³ --- ³ ---- ³ ----- ³ %-28s³\n"
-#define vstr_s3m_div "ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ\n"
-#define vstr_s3m_sampt_top   "ÚÄÄÄÄÄÂÄÄÄÄÄÄÄÂÄÄÄÄÄÂÄÄÄÄÄÄÂÄÄÄÄÄÄÄÂÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿\n"
-#define vstr_s3m_sampt_mid   "³INDEX³LENGTH ³LOOP ³VOLUME³ MID-C ³             NAME            ³\n"
-#define vstr_s3m_sampt_slice "ÃÄÄÄÄÄÅÄÄÄÄÄÄÄÅÄÄÄÄÄÅÄÄÄÄÄÄÅÄÄÄÄÄÄÄÅÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ´\n"
-#define vstr_s3m_sampt_index "³ %2i  ³"
-#define vstr_s3m_sampt_bottom "ÀÄÄÄÄÄÁÄÄÄÄÄÄÄÁÄÄÄÄÄÁÄÄÄÄÄÄÁÄÄÄÄÄÄÄÁÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ\n"
-#define vstr_s3m_pattern " \x0e %2i%s"
-#else
 #define vstr_s3m_samp "%-5i   %-3s   %3i%%   %5ihz  %-28s \n"
 #define vstr_s3m_sampe   "-----   ---   ----   -------  %-28s\n"
 #define vstr_s3m_div "--------------------------------------------\n"
@@ -54,7 +43,6 @@
 #define vstr_s3m_sampt_index " %-2i    "
 #define vstr_s3m_sampt_bottom vstr_s3m_div
 #define vstr_s3m_pattern " * %2i%s"
-#endif
 
 int Load_S3M_SampleData( Sample* samp, u8 ffi )
 {
@@ -145,11 +133,6 @@ int Load_S3M_Sample( Sample* samp, bool verbose )
 
 		if( verbose )
 		{
-	//		printf( "ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ\n" );
-	//		printf( "Loading Samples...\n" );
-	//		printf( "ÚÄÄÄÄÄÂÄÄÄÄÄÄÂÄÄÄÄÂÄÄÄÄÄÄÂÄÄÄÄÄÂÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿\n" );
-	//		printf( "³LENGTH³LOOP³VOLUME³ MID-C ³             NAME            ³\n");
-	//		printf( "ÅÄÄÄÄÄÄÅÄÄÄÄÅÄÄÄÄÄÄÅÄÄÄÄÄÅÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ´\n" );
 			printf( vstr_s3m_samp, samp->sample_length, samp->loop_type ? "Yes" : "No", (samp->default_volume*100) / 64, samp->frequency, samp->name );
 			/*printf( "  Name......%s\n", samp->name );
 			printf( "  Length....%i\n", samp->sample_length );
@@ -396,7 +379,6 @@ int Load_S3M( MAS_Module* mod, bool verbose )
 		if( verbose )
 		{
 			printf( vstr_s3m_sampt_index, x+1 );
-			//printf( "Sample %i\n", x+1 );
 		}
 		// create instrument for sample
 		memset( &mod->instruments[x], 0, sizeof( Instrument ) );
@@ -427,7 +409,6 @@ int Load_S3M( MAS_Module* mod, bool verbose )
 		{
 			printf( vstr_s3m_pattern, x+1, ((x+1)%15)?"":"\n" );
 		}
-			//printf( "%i...", x+1 );
 		file_seek_read( parap_patt[x]*16, SEEK_SET );
 		Load_S3M_Pattern( &mod->patterns[x] );
 	}

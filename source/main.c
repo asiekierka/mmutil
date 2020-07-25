@@ -20,9 +20,6 @@
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.           *
  ****************************************************************************/
 
-// this is
-// VERSION 1.8e
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -43,8 +40,6 @@
 #include "systems.h"
 #include "wav.h"
 #include "samplefix.h"
-
-extern void kiwi_start(void);
 
 int target_system;
 
@@ -191,8 +186,6 @@ int main(int argc, char* argv[])
 				str_header = argv[a]+2;
 			else if( argv[a][1] == 'm' )
 				m_flag = true;
-			else if( argv[a][1] == 'z' )
-				z_flag = true;
 		}
 		else if( !str_input )
 		{
@@ -208,32 +201,6 @@ int main(int argc, char* argv[])
 	if( number_of_inputs==0 )
 	{
 		print_usage();
-		return 0;
-	}
-	
-	if( z_flag )
-	{
-		kiwi_start();
-		file_open_read( str_input );
-		Sample s;
-		
-		Load_WAV( &s, false,false );
-		
-		s.name[0] = '%';
-		s.name[1] = 'c';
-		s.name[2] = 0;
-		
-		FixSample( &s );
-		
-		file_close_read();
-		file_open_write( str_output );
-		
-		int i;
-		for( i = 0; i < s.sample_length; i++ )
-			write8( ((u8*)s.data)[i] );
-		
-		file_close_write();
-		printf("okay\n");
 		return 0;
 	}
 
@@ -408,11 +375,7 @@ int main(int argc, char* argv[])
 
 		if( v_flag )
 		{
-#ifdef SUPER_ASCII
-			printf( "Success! \x02 \n" );
-#else
 			printf( "Success! :) \n" );
-#endif
 		}
 	}
 	else if( g_flag )

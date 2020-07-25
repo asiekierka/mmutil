@@ -34,15 +34,6 @@
 #include "errors.h"
 #include "samplefix.h"
 
-#ifdef SUPER_ASCII
-#define vstr_mod_div "ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ\n"
-#define vstr_mod_samp_top		"ÚÄÄÄÄÄÂÄÄÄÄÄÄÂÄÄÄÄÄÂÄÄÄÄÄÄÂÄÄÄÄÄÄÄÂÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿\n"
-#define vstr_mod_samp_header	"³INDEX³LENGTH³LOOP ³VOLUME³ MID-C ³ NAME                  ³\n"
-#define vstr_mod_samp_slice		"ÃÄÄÄÄÄÅÄÄÄÄÄÄÅÄÄÄÄÄÅÄÄÄÄÄÄÅÄÄÄÄÄÄÄÅÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ´\n"
-#define vstr_mod_samp			"³ %2i  ³%5i ³ %3s ³ %3i%% ³ %ihz³ %-22s³\n"
-#define vstr_mod_samp_bottom	"ÀÄÄÄÄÄÁÄÄÄÄÄÄÁÄÄÄÄÄÁÄÄÄÄÄÄÁÄÄÄÄÄÄÄÁÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ\n"
-#define vstr_mod_pattern " \x0e %2i%s"
-#else
 #define vstr_mod_div "--------------------------------------------\n"
 #define vstr_mod_samp_top		vstr_mod_div
 #define vstr_mod_samp_header	" INDEX LENGTH LOOP  VOLUME  MID-C   NAME                   \n"
@@ -50,7 +41,6 @@
 #define vstr_mod_samp			" %-2i    %-5i  %-3s   %3i%%    %ihz  %-22s \n"
 #define vstr_mod_samp_bottom	vstr_mod_div
 #define vstr_mod_pattern " * %2i%s"
-#endif
 
 #ifdef _MSC_VER
 double round( double value )

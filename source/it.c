@@ -32,22 +32,6 @@
 #include "errors.h"
 #include "samplefix.h"
 
-#ifdef SUPER_ASCII
-#define vstr_it_div "ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ\n"
-#define vstr_it_instr_top   "ÚÄÄÄÄÄÂÄÄÄÄÄÄÂÄÄÄÄÄÂÄÄÄÄÄÂÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿\n"
-#define vstr_it_instr_head  "³INDEX³VOLUME³ NNA ³ ENV ³            NAME           ³\n"
-#define vstr_it_instr_slice "ÃÄÄÄÄÄÅÄÄÄÄÄÄÅÄÄÄÄÄÅÄÄÄÄÄÅÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ´\n"
-#define vstr_it_instr		"³%3i  ³ %3i%% ³ %3s ³ %s%s%s ³ %-26s³\n"
-#define vstr_it_instr_bottom "ÀÄÄÄÄÄÁÄÄÄÄÄÄÁÄÄÄÄÄÁÄÄÄÄÄÁÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ\n"
-
-#define vstr_it_samp_top    "ÚÄÄÄÄÄÂÄÄÄÄÄÄÂÄÄÄÄÄÄÄÂÄÄÄÄÄÄÂÄÄÄÄÄÄÄÄÄÂÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿\n"
-#define vstr_it_samp_head   "³INDEX³VOLUME³DVOLUME³ LOOP ³  MID-C  ³            NAME           ³\n"
-#define vstr_it_samp_slice  "ÃÄÄÄÄÄÅÄÄÄÄÄÄÅÄÄÄÄÄÄÄÅÄÄÄÄÄÄÅÄÄÄÄÄÄÄÄÄÅÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ´\n"
-#define vstr_it_samp		"³%3i  ³ %3i%% ³ %3i%%  ³ %4s ³%6ihz ³ %-26s³\n"
-#define vstr_it_samp_bottom "ÀÄÄÄÄÄÁÄÄÄÄÄÄÁÄÄÄÄÄÄÄÁÄÄÄÄÄÄÁÄÄÄÄÄÄÄÄÄÁÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ\n"
-
-#define vstr_it_pattern " \x0e %2i"
-#else
 #define vstr_it_div "--------------------------------------------\n"
 #define vstr_it_instr_top   vstr_it_div
 #define vstr_it_instr_head  " INDEX VOLUME  NNA   ENV   NAME\n"
@@ -62,7 +46,6 @@
 #define vstr_it_samp_bottom vstr_it_div
 
 #define vstr_it_pattern " * %2i"
-#endif
 
 bool Load_IT_Envelope( Instrument_Envelope* env, bool unsign )
 {
@@ -189,34 +172,6 @@ int Load_IT_Instrument( Instrument* inst, bool verbose, int index )
 				(inst->env_flags&2)?"P":"-", \
 				(inst->env_flags&4)?"T":"-", \
 				inst->name );
-
-	/*	printf( "%i%%	", (inst->global_volume*100) / 128 );
-		switch( inst->nna )
-		{
-		case 0:
-			printf( "%s	", "CUT" ); break;
-		case 1:
-			printf( "%s	", "OFF" ); break;
-		case 2:
-			printf( "%s	", "CONT" ); break;
-		case 3:
-			printf( "%s	", "FADE" ); break;
-		}
-		if( (!(inst->env_flags & 2)) && (!(inst->env_flags & 4)) && (!(inst->env_flags & 8)) )
-		{
-			printf( "-	" );
-		}
-		else
-		{
-			if( inst->env_flags & 8)
-				printf( "V" );
-			if( inst->env_flags & 2)
-				printf( "P" );
-			if( inst->env_flags & 4)
-				printf( "S" );
-			printf( "	" );
-		}
-		printf( "%s\n", inst->name );*/
 	}
 
 	skip8( 7 );
@@ -563,7 +518,6 @@ int Load_IT( MAS_Module* itm, bool verbose )
 #ifdef vstr_it_instr_slice
 			printf( vstr_it_instr_slice );
 #endif
-			//printf( "INDEX	VOLUME	NNA	ENV	NAME\n" );
 		}
 		
 		// read instruments
@@ -589,7 +543,6 @@ int Load_IT( MAS_Module* itm, bool verbose )
 #ifdef vstr_it_samp_slice
 		printf( vstr_it_samp_slice );
 #endif
-		//printf( "INDEX	VOLUME	DVOLUME	LOOP	MID-C	NAME\n" );
 	}
 	
 	// read samples
@@ -600,7 +553,6 @@ int Load_IT( MAS_Module* itm, bool verbose )
 		if( verbose )
 		{
 			printf( vstr_it_samp, x+1, (itm->samples[x].global_volume * 100) / 64, (itm->samples[x].default_volume * 100) / 64, itm->samples[x].loop_type == 0 ? "None" : (itm->samples[x].loop_type == 1 ? "Forw" : "BIDI"), itm->samples[x].frequency, itm->samples[x].name );
-			//printf( "%i	%i%%	%i%%	%s	%ihz	%s\n", x+1, (itm->samples[x].global_volume*100) / 64, (itm->samples[x].default_volume*100) / 64, itm->samples[x].loop_type == 0 ? "None" : (itm->samples[x].loop_type == 1 ? "Yes" : "BIDI"), itm->samples[x].frequency, itm->samples[x].name );
 		}
 	}
 
@@ -670,7 +622,6 @@ int Load_IT( MAS_Module* itm, bool verbose )
 		else
 		{
 			Empty_IT_Pattern( &itm->patterns[x] );
-			//memset( &itm->patterns[x], 0, sizeof( Pattern ) );
 		}
 	}
 	

@@ -226,22 +226,11 @@ void align32f( FILE* p_file )
 void skip8( u32 count )
 {
 	fseek( fin, count, SEEK_CUR );
-//	while( count )
-//	{
-//		//read8();
-//		count--;
-//	}
 }
 
 void skip8f( u32 count, FILE* p_file )
 {
 	fseek( p_file, count, SEEK_CUR );
-//	while( count )		// this was a major slowdown!
-//	{
-//		//read8f( p_file );	
-//		
-//		count--;
-//	}
 }
  
 void file_delete( char* filename )

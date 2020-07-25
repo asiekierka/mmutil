@@ -35,17 +35,6 @@
 
 #define cho 64
 
-#ifdef SUPER_ASCII
-#define vstr_xm_samp "  %2i   ³   %s%s   ³ %-22s ³\n"
-#define vstr_xm_nosamp  "  --   ³   --   ³ %-22s ³\n"
-#define vstr_xm_div "ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ\n"
-#define vstr_xm_patt " \x0e %2i "
-#define vstr_xm_samp_top "ÚÄÄÄÄÄÂÄÄÄÄÄÄÄÂÄÄÄÄÄÄÄÄÂÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿\n"
-#define vstr_xm_samp_header "³INDEX³SAMPLES³ENVELOPE³          NAME          ³\n"
-#define vstr_xm_samp_prefix "³%3i  ³"
-#define vstr_xm_samp_slice "ÃÄÄÄÄÄÅÄÄÄÄÄÄÄÅÄÄÄÄÄÄÄÄÅÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ´\n"
-#define vstr_xm_samp_bottom "ÀÄÄÄÄÄÁÄÄÄÄÄÄÄÁÄÄÄÄÄÄÄÄÁÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ\n"
-#else
 #define vstr_xm_samp "  %2i   |   %s%s   | %-22s |\n"
 #define vstr_xm_nosamp "  --   |   --   | %-22s |\n"
 #define vstr_xm_div "--------------------------------------------\n"
@@ -55,7 +44,6 @@
 #define vstr_xm_samp_prefix "|%3i  |"
 #define vstr_xm_samp_slice "|-----+-------+--------+------------------------|\n"
 #define vstr_xm_samp_bottom "`-----------------------------------------------'\n"
-#endif
 
 int Get_XM_Frequency( s8 relnote, s8 finetune )
 {
@@ -737,8 +725,6 @@ int Load_XM( MAS_Module* mod, bool verbose )
 	
 	for( x = 0; x < mod->inst_count; x++ )
 	{
-	//	if( verbose )
-	//		printf( "Reading Instrument %i...\n", x+1 );
 		if( verbose )
 			printf( vstr_xm_samp_prefix, x+1 );
 		Load_XM_Instrument( &mod->instruments[x], mod, &next_sample, verbose );
